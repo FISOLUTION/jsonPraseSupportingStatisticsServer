@@ -1,0 +1,32 @@
+server:
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 200
+        format_sql: true
+
+  config:
+    import: application-database.yml
+  profiles:
+    active: develop
+    group:
+      develop: h2, jsonProject-develop
+
+---
+spring:
+  config.activate.on-profile: jsonProject-develop
+
+logging:
+  level:
+    org.hibernate.SQL: debug
