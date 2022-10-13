@@ -41,6 +41,7 @@ public class TargetDataDTO {
                 .dataSetName(dataSetName)
                 .annotationCnt(annotationCnt)
                 .objectName(objectName)
+                .status(status)
                 .superCategory(superCategory)
                 .result(targetResults)
                 .build();
