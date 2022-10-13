@@ -1,11 +1,17 @@
 package fisolution.jsonProject.service;
 
+import fisolution.jsonProject.controller.requestdto.SearchRequestDTO;
 import fisolution.jsonProject.controller.requestdto.TargetDataDTO;
+import fisolution.jsonProject.controller.responsedto.TargetDataResponseDTO;
+import fisolution.jsonProject.controller.responsedto.TargetDataSearchResponseDTO;
 import fisolution.jsonProject.entity.TargetData;
 import fisolution.jsonProject.entity.TargetResults;
+import fisolution.jsonProject.repository.DynamicQuery;
 import fisolution.jsonProject.repository.TargetDataRepository;
 import fisolution.jsonProject.repository.TargetResultRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,23 +19,30 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class TargetDataService {
 
-    TargetDataRepository targetDataRepository;
-    TargetResultRepository targetResultRepository;
+    private final TargetDataRepository targetDataRepository;
+    private final TargetResultRepository targetResultRepository;
+    private final DynamicQuery dynamicQuery;
 
     @Transactional
-    public void save(TargetDataDTO dto) {
+    public Long save(TargetDataDTO dto) {
         // 각각 toEntity 로 분리 작업
-        TargetData targetData = dto.toEntity();
-        TargetResults targetResults = dto.getTargetResultDTO().toEntity();
+        TargetResults targetResults = dto.getTargetResult().toEntity();
+        TargetData targetData = dto.toEntity(targetResults);
 
         // save 하기 cascade 써도 되지만 명시적으로 사용하기 위해서 그냥 분리 작업 실시
         targetDataRepository.save(targetData);
         targetResultRepository.save(targetResults);
+        return targetData.getId();
     }
 
 
     @Transactional(readOnly = true)
-    public void findById(Long id) {
+    public TargetDataResponseDTO findById(Long id) {
+        return targetDataRepository.findByIdWithResult(id);
+    }
 
+    @Transactional(readOnly = true)
+    public Page<TargetDataSearchResponseDTO> findAll(SearchRequestDTO dto, Pageable pageable) {
+        return dynamicQuery.mainSearch(dto, pageable);
     }
 }

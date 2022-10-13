@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TargetData extends BaseEntity {
@@ -25,13 +26,12 @@ public class TargetData extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private DataStatus status;          // 종합 상태
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private TargetResults result;       // 결과 매핑
 
     @Builder
-    public TargetData(Long id, String imageId, String fileName, String objectName, String superCategory, Integer annotationCnt, String dataSetName, DataStatus status) {
-        this.id = id;
+    public TargetData(String imageId, String fileName, String objectName, String superCategory, Integer annotationCnt, String dataSetName, DataStatus status, TargetResults targetResults) {
         this.imageId = imageId;
         this.fileName = fileName;
         this.objectName = objectName;
@@ -39,5 +39,6 @@ public class TargetData extends BaseEntity {
         this.annotationCnt = annotationCnt;
         this.dataSetName = dataSetName;
         this.status = status;
+        this.result = targetResults;
     }
 }
