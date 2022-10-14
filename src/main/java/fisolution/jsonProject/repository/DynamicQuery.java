@@ -31,7 +31,7 @@ public class DynamicQuery extends TargetDataQueryMethod {
         List<OrderSpecifier> orderSpecifiers = analyzeSort(pageable);
 
         List<TargetDataSearchResponseDTO> result = queryFactory.select(new QTargetDataSearchResponseDTO(
-                        targetData.dataSetName, targetData.imageId, targetData.fileName, targetData.objectName, targetData.status, targetData.updatedDate
+                        targetData.id, targetData.dataSetName, targetData.imageId, targetData.fileName, targetData.objectName, targetData.status, targetData.updatedDate
                 ))
                 .from(targetData)
                 .where(

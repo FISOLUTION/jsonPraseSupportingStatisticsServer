@@ -21,25 +21,40 @@ public class TargetResults {
     /**
      * 구문 정확성 오류 필드
      */
+    @Enumerated(EnumType.STRING)
     private DataStatus g011;    // 항목 및 Depth
+    @Enumerated(EnumType.STRING)
     private DataStatus g022;    // 데이터 타입
+    @Enumerated(EnumType.STRING)
     private DataStatus g031;    // 필수 여부
+    @Enumerated(EnumType.STRING)
     private DataStatus g041;    // 유효값
+    @Enumerated(EnumType.STRING)
     private DataStatus g051;    // 하위 원소 갯수
+    @Enumerated(EnumType.STRING)
     private DataStatus g052;    // 문자열 길이
+    @Enumerated(EnumType.STRING)
     private DataStatus g053;    // 숫자 범위
+    @Enumerated(EnumType.STRING)
     private DataStatus g061;    // 패턴
+    @Enumerated(EnumType.STRING)
     private DataStatus g071;    // 추가항목 허용여부
+    @Enumerated(EnumType.STRING)
     private DataStatus g081;    // 유일성 여부
+    @Enumerated(EnumType.STRING)
     private DataStatus g091;    // 소숫점 자리수
+    @Enumerated(EnumType.STRING)
     private DataStatus g101;    // Null 허용
 
     /**
      *  의미 정확성 오류 필드
      */
 
+    @Enumerated(EnumType.STRING)
     private DataStatus m011;    // 클래스 정합성
+    @Enumerated(EnumType.STRING)
     private DataStatus m021;    // id 일치성
+    @Enumerated(EnumType.STRING)
     private DataStatus m031;    // 제외 처리 준수
 
     @OneToOne(mappedBy = "result")

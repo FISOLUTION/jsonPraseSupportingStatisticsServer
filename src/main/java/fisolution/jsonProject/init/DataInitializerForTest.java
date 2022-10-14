@@ -27,7 +27,7 @@ public class DataInitializerForTest {
     public void init(){
 
         for(int i = 0; i < 100; i++) {
-            TargetResults targetResults = new TargetResults();
+            TargetResults targetResults = new TargetResults("orginalFile", DataStatus.ERROR, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS);
             // id 값 넣으면 merge 일어나긴 하는데...
             TargetData targetData = new TargetData("imageId", "fileName", "objectName", "superCategory", 3, "dataSetName", DataStatus.PASS, targetResults);
             targetResultRepository.save(targetResults);

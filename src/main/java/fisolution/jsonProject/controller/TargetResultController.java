@@ -42,7 +42,7 @@ public class TargetResultController {
     @GetMapping("/search/data")
     @ResponseStatus(HttpStatus.OK)
     public Page<TargetDataSearchResponseDTO> search(@ModelAttribute SearchRequestDTO dto,
-                                                    @PageableDefault(page = 0, size = 10, sort = "imageId") Pageable pageable){
+                                                    @PageableDefault(page = 0, size = 10, sort = {"imageId", "id"}) Pageable pageable){
         return targetDataService.findAll(dto, pageable);
     }
 
