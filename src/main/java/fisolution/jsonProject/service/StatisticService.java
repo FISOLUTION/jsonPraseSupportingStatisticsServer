@@ -5,6 +5,7 @@ import fisolution.jsonProject.entity.DataStatus;
 import fisolution.jsonProject.repository.CountQueryLegacy;
 import fisolution.jsonProject.repository.TargetDataRepository;
 import fisolution.jsonProject.repository.TargetResultRepository;
+import fisolution.jsonProject.repository.dao.CountByObjectNameDAO;
 import fisolution.jsonProject.repository.dao.CountDAO;
 import fisolution.jsonProject.repository.dao.OverviewDAO;
 import fisolution.jsonProject.repository.dto.OverviewDTO;
@@ -103,7 +104,9 @@ public class StatisticService {
                 ));
     }
 
-
+    public List<CountByObjectNameDAO> countPerObjectName(String dataSetName){
+        return targetDataRepository.statisticPerObject(dataSetName);
+    }
 
     private InspectResultDTO consumeCount(List<CountDAO> dao){
 
