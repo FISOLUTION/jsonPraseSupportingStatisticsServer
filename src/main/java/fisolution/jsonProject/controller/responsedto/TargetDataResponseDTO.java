@@ -1,7 +1,7 @@
 package fisolution.jsonProject.controller.responsedto;
 
 import fisolution.jsonProject.controller.requestdto.TargetResultDTO;
-import fisolution.jsonProject.entity.DataStatus;
+import fisolution.jsonProject.entity.enumtype.DataStatus;
 import fisolution.jsonProject.entity.TargetData;
 import fisolution.jsonProject.entity.TargetResults;
 import lombok.Data;
@@ -15,7 +15,6 @@ public class TargetDataResponseDTO {
     private String dataSetName;
     private Integer annotationCnt;
     private String objectName;
-    private String superCategory;
     // 이 부분은 논의 필요 server 에서 할 것인가 python 쪽에서 할 것인가
     private DataStatus status;
 
@@ -28,7 +27,6 @@ public class TargetDataResponseDTO {
         dataSetName = entity.getDataSetName();
         annotationCnt = entity.getAnnotationCnt();
         objectName = entity.getObjectName();
-        superCategory = entity.getSuperCategory();
         status = entity.getStatus();
         targetResultDTO = new TargetResultDTO(sub);
     }

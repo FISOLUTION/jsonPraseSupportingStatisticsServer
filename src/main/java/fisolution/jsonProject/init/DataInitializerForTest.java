@@ -1,8 +1,10 @@
 package fisolution.jsonProject.init;
 
-import fisolution.jsonProject.entity.DataStatus;
+import fisolution.jsonProject.entity.Category;
+import fisolution.jsonProject.entity.enumtype.DataStatus;
 import fisolution.jsonProject.entity.TargetData;
 import fisolution.jsonProject.entity.TargetResults;
+import fisolution.jsonProject.repository.CategoryRepository;
 import fisolution.jsonProject.repository.TargetDataRepository;
 import fisolution.jsonProject.repository.TargetResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -17,6 +21,7 @@ public class DataInitializerForTest {
 
     private final TargetDataRepository targetDataRepository;
     private final TargetResultRepository targetResultRepository;
+    private final CategoryRepository categoryRepository;
 
     @PostConstruct
     private void postConstruct(){
@@ -26,13 +31,31 @@ public class DataInitializerForTest {
     @Transactional
     public void init(){
 
-        for(int i = 0; i < 100; i++) {
-            TargetResults targetResults = new TargetResults("orginalFile", DataStatus.ERROR, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS);
+        long start = System.currentTimeMillis();
+
+        List<Category> categories = new ArrayList<>();
+
+        for(int i = 1; i < 100; i++) {
+            TargetResults targetResults = new TargetResults("originalFile", DataStatus.ERROR, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS, DataStatus.PASS);
             // id 값 넣으면 merge 일어나긴 하는데...
-            TargetData targetData = new TargetData("imageId", "fileName", "objectName", "superCategory", 3, "dataSetName", DataStatus.PASS, targetResults);
+            TargetData targetData = new TargetData("imageId", "fileName",  "objectName", 3, "dataSetName", DataStatus.PASS, targetResults);
+            Category category = new Category("super", "objName", targetData);
+            Category category1 = new Category("super", "ddd", targetData);
             targetResultRepository.save(targetResults);
             targetDataRepository.save(targetData);
+
+//            categoryRepository.save(category);
+//            categoryRepository.save(category1);
+
+            categories.add(category);
+            categories.add(category1);
         }
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("time : " + (end - start));
+
+
     }
 
 }

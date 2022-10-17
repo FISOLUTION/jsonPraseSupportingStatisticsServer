@@ -1,9 +1,7 @@
 package fisolution.jsonProject.repository.querymethod;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import fisolution.jsonProject.entity.DataStatus;
-import fisolution.jsonProject.entity.QTargetData;
-import fisolution.jsonProject.entity.TargetData;
+import fisolution.jsonProject.entity.enumtype.DataStatus;
 
 import static fisolution.jsonProject.entity.QTargetData.targetData;
 

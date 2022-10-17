@@ -1,6 +1,6 @@
 package fisolution.jsonProject.entity;
 
-import lombok.AllArgsConstructor;
+import fisolution.jsonProject.entity.enumtype.DataStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class TargetResults {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Lob

@@ -3,7 +3,7 @@ spring:
   datasource:
     driver-class-name: org.h2.Driver
     username: fisolution
-    url: jdbc:h2:tcp://localhost/~/jsonparse
+    url: jdbc:h2:tcp://localhost/~/jsonparse #?rewriteBatchedStatements=true&profileSQL=true&logger=Slf4JLogger&maxQuerySizeToLog=999999
 
   jpa:
     hibernate:

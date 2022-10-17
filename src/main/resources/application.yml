@@ -15,7 +15,6 @@ spring:
       hibernate:
         default_batch_fetch_size: 200
         format_sql: true
-
   config:
     import: application-database.yml
   profiles:

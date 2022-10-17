@@ -1,13 +1,26 @@
 package fisolution.jsonProject.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import fisolution.jsonProject.entity.enumtype.DataStatus;
+import fisolution.jsonProject.entity.enumtype.InspectionType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-//@Entity
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter
+@NoArgsConstructor
 public class InspectionResult {
 
-//    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private InspectionType inspectionType;
+    private DataStatus dataStatus;
 
-
+    @JoinColumn
+    @ManyToOne
+    private TargetData targetData;
 
 }

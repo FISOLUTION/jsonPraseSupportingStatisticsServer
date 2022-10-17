@@ -1,7 +1,7 @@
 package fisolution.jsonProject.controller.responsedto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import fisolution.jsonProject.entity.DataStatus;
+import fisolution.jsonProject.entity.enumtype.DataStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;

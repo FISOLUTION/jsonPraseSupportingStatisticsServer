@@ -1,15 +1,16 @@
 package fisolution.jsonProject.controller.requestdto;
 
-import fisolution.jsonProject.entity.DataStatus;
+import fisolution.jsonProject.entity.Category;
+import fisolution.jsonProject.entity.enumtype.DataStatus;
 import fisolution.jsonProject.entity.TargetData;
 import fisolution.jsonProject.entity.TargetResults;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class TargetDataDTO {
     @NotNull
     private String objectName;
     @NotNull
-    private String superCategory;
+    private List<CategoryDTO> categories;
     // 이 부분은 논의 필요 server 에서 할 것인가 python 쪽에서 할 것인가
     @NotNull
     private DataStatus status;
@@ -35,6 +36,7 @@ public class TargetDataDTO {
     private TargetResultDTO targetResult;
 
     public TargetData toEntity(TargetResults targetResults){
+
         return TargetData.builder()
                 .fileName(fileName)
                 .imageId(imageId)
@@ -42,7 +44,6 @@ public class TargetDataDTO {
                 .annotationCnt(annotationCnt)
                 .objectName(objectName)
                 .status(status)
-                .superCategory(superCategory)
                 .result(targetResults)
                 .build();
     }

@@ -1,7 +1,7 @@
 package fisolution.jsonProject.service;
 
 import fisolution.jsonProject.controller.responsedto.InspectResultDTO;
-import fisolution.jsonProject.entity.DataStatus;
+import fisolution.jsonProject.entity.enumtype.DataStatus;
 import fisolution.jsonProject.repository.CountQueryLegacy;
 import fisolution.jsonProject.repository.TargetDataRepository;
 import fisolution.jsonProject.repository.TargetResultRepository;
