@@ -27,11 +27,11 @@ public interface TargetDataRepository extends JpaRepository<TargetData, Long> {
 //    Long statisticInspection();
 
     @Query("select new fisolution.jsonProject.repository.dao." +
-            "CountByObjectNameDAO(c.category, c.superCategory, count(t.id), sum(t.annotationCnt)) " +
-            "from TargetData t " +
-            "join Category as c on c.targetData.id = t.id " +
-            "where t.dataSetName = :dataSetName " +
-            "group by c.category, c.superCategory")
+            "CountByObjectNameDAO(cd.id, cd.categoryName, cd.superCategoryName, cd.inOut, count(cd.id), sum(t.annotationCnt)) " +
+            "from CategoryData cd " +
+            "left join cd.categoryList as c " +
+            "left join c.targetData as t on t.dataSetName = :dataSetName " +
+            "group by cd.id")
     List<CountByObjectNameDAO> statisticPerObject(@Param("dataSetName") String dataSetName);
 
 }

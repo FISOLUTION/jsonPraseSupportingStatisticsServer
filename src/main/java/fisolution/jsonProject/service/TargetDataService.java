@@ -5,12 +5,10 @@ import fisolution.jsonProject.controller.requestdto.TargetDataDTO;
 import fisolution.jsonProject.controller.responsedto.TargetDataResponseDTO;
 import fisolution.jsonProject.controller.responsedto.TargetDataSearchResponseDTO;
 import fisolution.jsonProject.entity.Category;
+import fisolution.jsonProject.entity.CategoryData;
 import fisolution.jsonProject.entity.TargetData;
 import fisolution.jsonProject.entity.TargetResults;
-import fisolution.jsonProject.repository.CategoryRepository;
-import fisolution.jsonProject.repository.DynamicQuery;
-import fisolution.jsonProject.repository.TargetDataRepository;
-import fisolution.jsonProject.repository.TargetResultRepository;
+import fisolution.jsonProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +25,7 @@ public class TargetDataService {
     private final TargetDataRepository targetDataRepository;
     private final TargetResultRepository targetResultRepository;
     private final CategoryRepository categoryRepository;
+    private final CategoryDataRepository categoryDataRepository;
     private final DynamicQuery dynamicQuery;
 
     @Transactional
@@ -35,7 +34,11 @@ public class TargetDataService {
         TargetResults targetResults = dto.getTargetResult().toEntity();
         TargetData targetData = dto.toEntity(targetResults);
         List<Category> categories = dto.getCategories().stream()
-                .map((categoryDTO) -> categoryDTO.toEntity(targetData))
+                .map((categoryDTO) -> {
+                    CategoryData categoryData = categoryDataRepository
+                            .getReferenceById(categoryDTO.getCategoryDataId());
+                    return categoryDTO.toEntity(targetData, categoryData);
+                })
                         .collect(Collectors.toList());
 
         // save 하기 cascade 써도 되지만 명시적으로 사용하기 위해서 그냥 분리 작업 실시

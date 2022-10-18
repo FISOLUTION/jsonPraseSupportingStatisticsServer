@@ -12,18 +12,17 @@ public class Category {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String superCategory;
-    private String category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "targetDataId")
     private TargetData targetData;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryDataId")
+    private CategoryData categoryData;
 
-    public Category(String superCategory, String category, TargetData targetData) {
-        this.superCategory = superCategory;
-        this.category = category;
+    public Category(TargetData targetData, CategoryData categoryData) {
         this.targetData = targetData;
+        this.categoryData = categoryData;
     }
-
 }
