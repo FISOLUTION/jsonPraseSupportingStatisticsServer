@@ -20,14 +20,15 @@ public interface TargetDataRepository extends JpaRepository<TargetData, Long> {
 
     @Query("select new fisolution.jsonProject.repository.dao." +
             "OverviewDAO(t.status, count(t.id), sum(t.annotationCnt)) " +
-            "from TargetData t where t.dataSetName = :dataSetName")
+            "from TargetData t where t.dataSetName = :dataSetName " +
+            "group by t.status")
     List<OverviewDAO> statisticOverviewQuery(@Param("dataSetName") String dataSetName);
 
 //    @Query(value = "select sum(r.status) over (partition by r.g011 group by r.status) s from TargetResults r", nativeQuery = true)
 //    Long statisticInspection();
 
     @Query("select new fisolution.jsonProject.repository.dao." +
-            "CountByObjectNameDAO(cd.id, cd.categoryName, cd.superCategoryName, cd.inOut, count(cd.id), sum(t.annotationCnt)) " +
+            "CountByObjectNameDAO(cd.id, cd.categoryName, cd.superCategoryName, cd.in_out, count(cd.id), sum(t.annotationCnt)) " +
             "from CategoryData cd " +
             "left join cd.categoryList as c " +
             "left join c.targetData as t on t.dataSetName = :dataSetName " +

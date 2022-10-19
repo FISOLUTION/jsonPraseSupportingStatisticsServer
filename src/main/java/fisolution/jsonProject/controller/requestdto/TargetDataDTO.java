@@ -36,7 +36,6 @@ public class TargetDataDTO {
     private TargetResultDTO targetResult;
 
     public TargetData toEntity(TargetResults targetResults){
-
         return TargetData.builder()
                 .fileName(fileName)
                 .imageId(imageId)

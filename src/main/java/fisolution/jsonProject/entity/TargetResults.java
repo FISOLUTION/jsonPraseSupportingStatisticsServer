@@ -1,15 +1,19 @@
 package fisolution.jsonProject.entity;
 
 import fisolution.jsonProject.entity.enumtype.DataStatus;
+import fisolution.jsonProject.entity.enumtype.InspectionType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "TARGETRESULTS")
 public class TargetResults {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,6 +82,31 @@ public class TargetResults {
         this.m011 = m011;
         this.m021 = m021;
         this.m031 = m031;
+    }
+
+    public void injectTargetData(TargetData targetData){
+        this.targetData = targetData;
+    }
+
+    public List<InspectionResult> createInspectionResults(){
+        List<InspectionResult> inspectionResults = new ArrayList<>();
+        inspectionResults.add(new InspectionResult(InspectionType.G011, g011, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G022, g022, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G031, g031, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G041, g041, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G051, g051, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G052, g052, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G053, g053, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G061, g061, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G071, g071, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G081, g081, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G091, g091, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.G101, g101, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.M011, m011, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.M021, m021, targetData));
+        inspectionResults.add(new InspectionResult(InspectionType.M031, m031, targetData));
+
+        return inspectionResults;
     }
 
 }

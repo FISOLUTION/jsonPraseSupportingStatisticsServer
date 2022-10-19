@@ -2,8 +2,10 @@ package fisolution.jsonProject.controller;
 
 import fisolution.jsonProject.controller.requestdto.SearchRequestDTO;
 import fisolution.jsonProject.controller.requestdto.TargetDataDTO;
+import fisolution.jsonProject.controller.responsedto.InspectResultDTO;
 import fisolution.jsonProject.controller.responsedto.TargetDataResponseDTO;
 import fisolution.jsonProject.controller.responsedto.TargetDataSearchResponseDTO;
+import fisolution.jsonProject.service.StatisticService;
 import fisolution.jsonProject.service.StatisticUtils;
 import fisolution.jsonProject.service.TargetDataService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
@@ -26,11 +27,22 @@ public class TargetResultController {
 
     private final TargetDataService targetDataService;
     private final StatisticUtils statisticUtils;
+    private final StatisticService statisticService;
 
     @PostMapping("/data")
     @ResponseStatus(HttpStatus.CREATED)
     public Long save(@RequestBody @Validated TargetDataDTO dto){
-        return targetDataService.save(dto);
+        Long save = targetDataService.save2(dto);
+        System.out.println("targetDataService = " + targetDataService.getTime());
+        return save;
+    }
+
+    @PostMapping("/data2")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Long save2(@RequestBody @Validated TargetDataDTO dto){
+        Long save = targetDataService.save(dto);
+        System.out.println("targetDataService = " + targetDataService.getTime2());
+        return save;
     }
 
     /**
@@ -52,7 +64,18 @@ public class TargetResultController {
     @GetMapping("/statistics")
     @ResponseStatus(HttpStatus.OK)
     public Map<String, Object> statistic(@RequestParam String dataSetName){
-        return statisticUtils.overall(dataSetName);
+        long start = System.currentTimeMillis();
+        Map<String, Object> overall = statisticUtils.overall(dataSetName);
+        long end = System.currentTimeMillis();
+        System.out.println("time" + (end - start));
+        return overall;
+    }
+
+    @GetMapping("/statistics2")
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, InspectResultDTO> statistic2(@RequestParam String dataSetName){
+        long start = System.currentTimeMillis();
+        return statisticService.inspectionResult(dataSetName);
     }
 
 }

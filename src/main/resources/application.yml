@@ -9,25 +9,27 @@ server:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     open-in-view: false
     properties:
       hibernate:
         default_batch_fetch_size: 200
-        format_sql: true
+#        format_sql: true
         jdbc:
           batch_size: 100
+
   config:
     import: application-database.yml
   profiles:
-    active: develop
+    active: test
     group:
       develop: h2, jsonProject-develop
+      test: mysql, jsonProject-develop
 
 ---
 spring:
   config.activate.on-profile: jsonProject-develop
-
-logging:
-  level:
-    org.hibernate.SQL: debug
+#
+#logging:
+#  level:
+#    org.hibernate.SQL: debug

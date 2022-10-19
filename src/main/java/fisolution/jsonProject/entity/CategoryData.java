@@ -12,23 +12,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Table(name = "CATEGORYDATA")
 public class CategoryData {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
     private Long id;
     private String categoryName;
     private String superCategoryName;
-    private String inOut;
+    private String in_out;
     private String kind;
 
     @OneToMany(mappedBy = "categoryData")
     private List<Category> categoryList = new ArrayList<>();
 
-    public CategoryData(Long id, String categoryName, String superCategoryName, String inOut, String kind) {
+    public CategoryData(Long id, String categoryName, String superCategoryName, String in_out, String kind) {
         this.id = id;
         this.categoryName = categoryName;
         this.superCategoryName = superCategoryName;
-        this.inOut = inOut;
+        this.in_out = in_out;
         this.kind = kind;
     }
 }

@@ -2,7 +2,9 @@ package fisolution.jsonProject.service;
 
 import fisolution.jsonProject.controller.responsedto.InspectResultDTO;
 import fisolution.jsonProject.entity.enumtype.DataStatus;
+import fisolution.jsonProject.entity.enumtype.InspectionType;
 import fisolution.jsonProject.repository.CountQueryLegacy;
+import fisolution.jsonProject.repository.InspectionResultRepository;
 import fisolution.jsonProject.repository.TargetDataRepository;
 import fisolution.jsonProject.repository.TargetResultRepository;
 import fisolution.jsonProject.repository.dao.CountByObjectNameDAO;
@@ -12,9 +14,7 @@ import fisolution.jsonProject.repository.dto.OverviewDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +24,7 @@ public class StatisticService {
     private final TargetDataRepository targetDataRepository;
     private final TargetResultRepository targetResultRepository;
     private final CountQueryLegacy countQueryLegacy;
+    private final InspectionResultRepository inspectionResultRepository;
 
     /**
      * overAll data 조회 : JSON 건수, Annotation 건수, Json 1건당 평균 annotation, 순도율, 오류율, 오류 건수
@@ -97,11 +98,40 @@ public class StatisticService {
         results.add(consumeCount(countQueryLegacy.countM021(dataSetName)));
         results.add(consumeCount(countQueryLegacy.countM031(dataSetName)));
 
+
         return results.stream()
                 .collect(Collectors.toMap(
                         InspectResultDTO::getInspectName,
                         inspectResultDTO -> inspectResultDTO
                 ));
+    }
+
+    public Map<String, InspectResultDTO> inspectionResult(String dataSetName){
+        long start = System.currentTimeMillis();
+        Map<InspectionType, Long> errorMap = new HashMap<>();
+        Map<InspectionType, Long> passMap = new HashMap<>();
+        Map<String, InspectResultDTO> result = new HashMap<>();
+
+        inspectionResultRepository.inspectResultPerDataSetName(dataSetName)
+                .forEach((inspectionResultCount -> {
+                    if(inspectionResultCount.getDataStatus().equals(DataStatus.ERROR))
+                        errorMap.put(inspectionResultCount.getInspectionType(), inspectionResultCount.getCnt());
+                    else
+                        passMap.put(inspectionResultCount.getInspectionType(), inspectionResultCount.getCnt());
+                }));
+
+        Arrays.stream(InspectionType.values())
+                .forEach(inspectionType -> {
+                    Long passCnt = passMap.getOrDefault(inspectionType, 0L);
+                    Long errorCnt = errorMap.getOrDefault(inspectionType, 0L);
+                    long total = passCnt + errorCnt;
+                    result.put(inspectionType.toString(), new InspectResultDTO(inspectionType.toString(), (double) passCnt / total, errorCnt));
+                });
+        long end = System.currentTimeMillis();
+
+        System.out.println("(end - start) = " + (end - start));
+
+        return result;
     }
 
     public List<CountByObjectNameDAO> countPerObjectName(String dataSetName){

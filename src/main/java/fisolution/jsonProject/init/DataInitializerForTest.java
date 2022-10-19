@@ -32,7 +32,7 @@ public class DataInitializerForTest {
     private final CategoryDataRepository categoryDataRepository;
     private final JdbcTemplate jdbcTemplate;
 
-//    @PostConstruct
+    @PostConstruct
     private void postConstruct() throws NoSuchMethodException {
         init();
     }
@@ -42,7 +42,7 @@ public class DataInitializerForTest {
 
         List<CategoryData> categoryDataList = readExcel();
 
-        int[][] ints = jdbcTemplate.batchUpdate("insert into CATEGORYDATA (ID, SUPERCATEGORYNAME, CATEGORYNAME, INOUT, KIND) " +
+        int[][] ints = jdbcTemplate.batchUpdate("insert into CATEGORYDATA (ID, SUPERCATEGORYNAME, CATEGORYNAME, in_out, KIND) " +
                         "VALUES (?, ?, ?, ?, ?)",
                 categoryDataList,
                 100,
@@ -50,7 +50,7 @@ public class DataInitializerForTest {
                     ps.setLong(1, category.getId());
                     ps.setString(2, category.getSuperCategoryName());
                     ps.setString(3, category.getCategoryName());
-                    ps.setString(4, category.getInOut());
+                    ps.setString(4, category.getIn_out());
                     ps.setString(5, category.getKind());
                 });
 

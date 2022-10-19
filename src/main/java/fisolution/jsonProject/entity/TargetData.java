@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "TARGETDATA")
 public class TargetData extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

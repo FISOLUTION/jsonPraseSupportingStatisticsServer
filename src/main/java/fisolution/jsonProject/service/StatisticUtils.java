@@ -21,7 +21,11 @@ public class StatisticUtils {
         Map<String, Object> result = new HashMap<>();
 
         result.put("json 건수 조회", statisticService.statisticOverview(dataSetName));
+
+        long start = System.currentTimeMillis();
         result.put("검사유형별 품질", statisticService.inspectionResultLegacy(dataSetName));
+        long end = System.currentTimeMillis();
+        System.out.println("end - start = " + (end - start));
         result.put("클래스별 건수", statisticService.countPerObjectName(dataSetName));
 
         return result;

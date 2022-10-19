@@ -133,12 +133,16 @@ public class NativeQueryTest {
     @Transactional
     public void bulk(){
         // given ? 어캐 확인하지
-        for(long i = 200; i < 1000; i++){
+        // 시간초 측정 batch size 1 -> 22 초 즉 하나하나 insert 쿼리 작성할 때, 100 -> 4초 정도
+        long l = System.currentTimeMillis();
+        for(long i = 200; i < 100000; i++){
             CategoryData categoryData = new CategoryData(i, "", "", "", "");
             em.persist(categoryData);
         }
         // when
         em.flush();
+        long e = System.currentTimeMillis();
+        System.out.println(e - l);
         em.find(CategoryData.class, 1L);
         // then
     }
