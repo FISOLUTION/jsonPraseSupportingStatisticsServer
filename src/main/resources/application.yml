@@ -21,7 +21,7 @@ spring:
   config:
     import: application-database.yml
   profiles:
-    active: test
+    active: develop
     group:
       develop: h2, jsonProject-develop
       test: mysql, jsonProject-develop
