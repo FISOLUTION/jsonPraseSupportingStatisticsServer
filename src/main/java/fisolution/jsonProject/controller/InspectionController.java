@@ -31,7 +31,7 @@ public class InspectionController {
 
     @GetMapping("/inspections")
     public Page<InspectionResponse> search(@ModelAttribute SearchInspectionRequestDTO request,
-                                           @PageableDefault(page = 0, size = 10, sort = {"imageId", "id"}) Pageable pageable) {
+                                           @PageableDefault(page = 0, size = 10) Pageable pageable) {
         return inspectionService.search(request, pageable);
     }
 
