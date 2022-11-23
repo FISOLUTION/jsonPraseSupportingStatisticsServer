@@ -1,5 +1,6 @@
 package fisolution.jsonProject.repository;
 
+import fisolution.jsonProject.entity.AnnotationData;
 import fisolution.jsonProject.entity.Category;
 import fisolution.jsonProject.entity.InspectionResult;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,19 @@ public class BulkInsertRepository {
                     ps.setString(1, inspectionResult.getDataStatus().toString());
                     ps.setString(2, inspectionResult.getInspectionType().toString());
                     ps.setLong(3, inspectionResult.getTargetData().getId());
+                });
+    }
+
+    public void bulkInsertAnnotationData(List<AnnotationData> annotationDataList){
+        jdbcTemplate.batchUpdate(
+                "insert into AnnotationData (ANNOTATIONID, OBJECTID, IOU, INSPECTIONID) VALUES (?, ?, ?, ?)",
+                annotationDataList,
+                100,
+                (PreparedStatement ps, AnnotationData annotationData) -> {
+                    ps.setString(1, annotationData.getAnnotationId());
+                    ps.setString(2, annotationData.getObjectId());
+                    ps.setString(3, annotationData.getIou());
+                    ps.setLong(4, annotationData.getInspection().getId());
                 });
     }
 }
